@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aplus.market.mapper.ChannelReportMapper">
+
+    <select id="selectList" resultType="com.aplus.market.model.vo.ChannelReportVO">
+        SELECT
+        DATE_FORMAT (u.gmt_datetime,
+        <choose>
+            <when test="type == '1111'">
+              '%Y'
+            </when>
+            <when test= "type == '22'" >
+              '%Y-%m'
+            </when>
+            <otherwise>
+              '%Y-%m-%d'
+            </otherwise>
+        </choose>  )reportDate,
+        COUNT(1) registerNum, 
+        u.channel_name channelName, 
+        SUM(IF((u.auth_status = 1), 1, 0)) authNum
+        FROM
+        user u
+        WHERE
+        u.channel_id = #{channelId}
+        <choose>
+            <when test= "type == '1111'" >
+                <if test="startTime !=null and startTime !=''">
+                  AND DATE_FORMAT(u.gmt_datetime, '%Y') <![CDATA[>=]]> #{startTime}
+                </if>
+                <if test="endTime !=null and endTime !=''">
+                  AND DATE_FORMAT(u.gmt_datetime, '%Y') <![CDATA[<=]]> #{endTime}
+                </if>
+            </when>
+            <when test="type == '22'" >
+                <if test="startTime !=null and startTime !=''">
+                  AND DATE_FORMAT(u.gmt_datetime, '%Y-%m') <![CDATA[>=]]> #{startTime}
+                </if>
+                <if test="endTime !=null and endTime !=''">
+                  AND DATE_FORMAT(u.gmt_datetime, '%Y-%m') <![CDATA[<=]]> #{endTime}
+                </if>
+            </when >
+            <otherwise>
+                <if test="startTime !=null and startTime !=''">
+                  AND DATE_FORMAT(u.gmt_datetime, '%Y-%m-%d') <![CDATA[>=]]> #{startTime}
+                </if>
+                <if test="endTime !=null and endTime !=''">
+                  AND DATE_FORMAT(u.gmt_datetime, '%Y-%m-%d') <![CDATA[<=]]> #{endTime}
+                </if>
+            </otherwise>
+        </choose>
+        GROUP BY
+        DATE_FORMAT (u.gmt_datetime,
+        <choose>
+            <when test=" type == '1111' ">
+              '%Y'
+            </when>
+            <when test=" type == '22' ">
+              '%Y-%m'
+            </when>
+            <otherwise>
+              '%Y-%m-%d'
+            </otherwise>
+        </choose>)DESC
+    </select>
+</mapper>

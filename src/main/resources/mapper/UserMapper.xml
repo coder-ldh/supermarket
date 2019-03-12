@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aplus.market.mapper.UserMapper">
+
+	<select id="selectListByChannelIdAndReportDate" resultType="com.aplus.market.model.vo.UserVO">
+		SELECT
+			u.user_name userName,
+			u.phone ,
+			u.gmt_datetime createTime,
+			u.auth_status authStatus
+		FROM
+			user u
+		WHERE
+			u.channel_id = #{channelId}
+			<if test="reportDate !=null and reportDate !=''">
+				AND DATE_FORMAT(u.gmt_datetime, '${dateFormat}') = #{reportDate}
+			</if>
+	</select>
+</mapper>
