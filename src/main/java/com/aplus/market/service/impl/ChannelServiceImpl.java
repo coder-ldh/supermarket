@@ -8,6 +8,7 @@ import com.aplus.market.exception.LoginException;
 import com.aplus.market.exception.code.BusinessExceptionCode;
 import com.aplus.market.exception.code.LoginExceptionCode;
 import com.aplus.market.mapper.ChannelMapper;
+import com.aplus.market.model.Admin;
 import com.aplus.market.model.Channel;
 import com.aplus.market.service.ChannelService;
 import com.aplus.market.service.JwtService;
@@ -39,19 +40,19 @@ public class ChannelServiceImpl implements ChannelService {
         if (StringUtils.isEmpty(name) || StringUtils.isEmpty(password)){
             throw new BusinessException(BusinessExceptionCode.PARAMETER_IS_WRONG);
         }
-        Channel channel = new Channel();
-        channel.setName(name);
+        Admin channel = new Admin();
+        channel.setUserName(name);
         channel.setStatus(1);
-        Channel selectOne = channelMapper.selectOne(channel);
+/*        Channel selectOne = channelMapper.selectOne(channel);
         if (selectOne == null){
             throw new LoginException(LoginExceptionCode.LOGIN_USER_NOT_EXIST);
         }
         String onePassword = selectOne.getPassword();
         String md5Hex = DigestUtils.md5Hex(password);
         if (StringUtils.isNoneEmpty(onePassword) && onePassword.equalsIgnoreCase(md5Hex)){
-            /*生成token传给前端*/
+            *//*生成token传给前端*//*
             return generateJwt(selectOne);
-        }
+        }*/
         throw new LoginException(LoginExceptionCode.Login_PASSWORD_INCORRECT);
     }
 
@@ -65,7 +66,7 @@ public class ChannelServiceImpl implements ChannelService {
         String jwt;
         try {
             /*将token存放到redis中*/
-            jwt = jwtService.createJWT(id.toString(), "bejing", JSONObject.toJSON(channel).toString(), JwtConstant.JWT_TTL);
+            jwt = jwtService.createJWT(id.toString(), "ldh", JSONObject.toJSON(channel).toString(), JwtConstant.JWT_TTL);
             saveToken(id,jwt);
         } catch (Exception e) {
             throw new BusinessException(BusinessExceptionCode.TOKEN_ERROR);
@@ -74,6 +75,6 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     void saveToken(Long id ,String token){
-        redisService.set(RedisConstant.CHANNEL_ID_TOKEN_ +id ,token,RedisConstant.TOKEN_TTL);
+        redisService.set(RedisConstant.ADMIN_ID_TOKEN_ +id ,token,RedisConstant.TOKEN_TTL);
     }
 }

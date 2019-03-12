@@ -1,7 +1,9 @@
 package com.aplus.market.cache;
 
+import com.alibaba.fastjson.JSONObject;
 import com.aplus.market.constant.Constant;
 import com.aplus.market.exception.PermissionAopException;
+import com.aplus.market.model.Admin;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -107,8 +109,8 @@ public class ThreadCacheMgr {
      * 获取ID
      * @return
      */
-    public static Long getChannelId(){
-        String channelId =(String) get(Constant.CHANNEL_ID);
+    public static Long getAdminId(){
+        String channelId =(String) get(Constant.ADMIN_ID);
         if (StringUtils.isEmpty(channelId)){
             return null;
         }
@@ -118,5 +120,14 @@ public class ThreadCacheMgr {
             throw new PermissionAopException("adminId 不为数字");
         }
 
+    }
+
+    /**
+     * 获取admin
+     * @return
+     */
+    public static Admin getAdmin(){
+        String admin =(String) get("admin");
+        return JSONObject.parseObject(admin, Admin.class);
     }
 }

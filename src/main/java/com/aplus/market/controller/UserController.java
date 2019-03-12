@@ -38,7 +38,7 @@ public class UserController {
         if (StringUtils.isEmpty(reportDate)){
             throw new BusinessException(BusinessExceptionCode.PARAMETER_IS_WRONG);
         }
-        Long channelId = ThreadCacheMgr.getChannelId();
+        Long adminId = ThreadCacheMgr.getAdminId();
         Integer pageNum = userPO.getPageNum();
         Integer pageSize = userPO.getPageSize();
         if (pageNum == null || pageSize == null){

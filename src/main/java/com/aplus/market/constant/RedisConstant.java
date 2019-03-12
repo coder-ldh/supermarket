@@ -9,11 +9,11 @@ public class RedisConstant {
     /**
      * 用户权限集合key
      */
-    public static final String CHANNEL_PERMISSION_LIST_ID_ = "CHANNEL_PERMISSION_LIST_ID_";
+    public static final String ADMIN_PERMISSION_LIST_ID_ = "ADMIN_PERMISSION_LIST_ID_";
     /**
      *运营商
      */
-    public static final String CHANNEL_ID_TOKEN_ = "CHANNEL_ID_TOKEN_";
+    public static final String ADMIN_ID_TOKEN_ = "ADMIN_ID_TOKEN_";
     /**
      * token失效时间12小时
      */

@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void authRuleVerify(String authRule, Long adminId) {
-        Object o = redisService.get(RedisConstant.CHANNEL_PERMISSION_LIST_ID_ + adminId);
+        Object o = redisService.get(RedisConstant.ADMIN_PERMISSION_LIST_ID_ + adminId);
         if (o == null){
             throw new PermissionAopException(PermissionExceptionCode.NO_PERMISSION.getCode(),PermissionExceptionCode.NO_PERMISSION.getMessage());
         }

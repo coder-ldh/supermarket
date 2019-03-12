@@ -9,7 +9,7 @@ public class JwtConstant {
     /**
      * 加密密文
      */
-    public static final String JWT_SECRET = "beijing";
+    public static final String JWT_SECRET = "ldh";
     /**
      * millisecond
      */
